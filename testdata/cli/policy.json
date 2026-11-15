@@ -1,0 +1,1 @@
+{"schema_version":1,"allow":[{"path":"usr/bin/tool","fields":["content"],"reason":"Approved maintenance rebuild"},{"path":"usr/bin/unused","fields":["content"],"reason":"No matching change in this example"}]}

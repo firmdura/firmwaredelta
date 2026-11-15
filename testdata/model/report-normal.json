@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "baseline_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "candidate_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "changes": [
+    {
+      "path": "etc/service.conf",
+      "category": "config",
+      "field": "content",
+      "before": {
+        "size": 12,
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "after": {
+        "size": 15,
+        "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      },
+      "expected": false
+    },
+    {
+      "path": "usr/bin/demo",
+      "category": "executable",
+      "field": "content",
+      "before": {
+        "size": 100,
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      "after": {
+        "size": 110,
+        "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "expected": true,
+      "reason": "Approved maintenance rebuild"
+    }
+  ],
+  "policy_warnings": [
+    {
+      "path": "usr/bin/unused",
+      "code": "unused_rule"
+    }
+  ],
+  "counts": {
+    "total": 2,
+    "expected": 1,
+    "unexpected": 1
+  },
+  "verdict": "unexpected_changes"
+}

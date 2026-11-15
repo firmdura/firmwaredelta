@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "allow": [
+    {
+      "path": "usr/bin/demo",
+      "fields": [
+        "content"
+      ],
+      "reason": "Approved maintenance rebuild"
+    }
+  ]
+}

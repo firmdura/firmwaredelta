@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "path": "etc",
+      "kind": "directory",
+      "mode": "0755",
+      "category": "other"
+    },
+    {
+      "path": "etc/service.conf",
+      "kind": "file",
+      "mode": "0644",
+      "category": "config",
+      "size": 12,
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "path": "usr/lib/libdemo.so",
+      "kind": "file",
+      "mode": "0755",
+      "category": "library",
+      "size": 100,
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "elf": {
+        "class": "64",
+        "endian": "little",
+        "machine": 62,
+        "soname": "libdemo.so.1",
+        "needed": [
+          "libc.so.6"
+        ]
+      }
+    },
+    {
+      "path": "usr/lib/libdemo.so.1",
+      "kind": "symlink",
+      "mode": "0777",
+      "category": "other",
+      "target": "libdemo.so"
+    }
+  ]
+}

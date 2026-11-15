@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "baseline_digest": "ba4fc47c6525d8de1a187fe7d41e1de1b2fe52df1f6a43d0544675d3ac44e5fe",
+  "candidate_digest": "ba4fc47c6525d8de1a187fe7d41e1de1b2fe52df1f6a43d0544675d3ac44e5fe",
+  "changes": [],
+  "policy_warnings": [],
+  "counts": {
+    "total": 0,
+    "expected": 0,
+    "unexpected": 0
+  },
+  "verdict": "unchanged"
+}

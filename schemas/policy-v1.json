@@ -1,0 +1,248 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "allow": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/path"
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "presence",
+                "kind",
+                "content",
+                "mode",
+                "target",
+                "elf.class",
+                "elf.endian",
+                "elf.machine",
+                "elf.soname",
+                "elf.needed"
+              ]
+            }
+          },
+          "reason": {
+            "type": "string",
+            "allOf": [
+              {
+                "pattern": "^[^\u0000]*$"
+              },
+              {
+                "pattern": "[^\t-\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]"
+              }
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "fields",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "allow"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firmwaredelta.invalid/schemas/policy-v1.json",
+  "$defs": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^/\u0000]+(/[^/\u0000]+)*$",
+      "not": {
+        "pattern": "(^|/)\\.\\.?(/|$)"
+      }
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "directory",
+            "symlink",
+            "block_device",
+            "char_device",
+            "fifo",
+            "socket"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^[0-7]{4}$"
+        },
+        "category": {
+          "enum": [
+            "config",
+            "library",
+            "executable",
+            "other"
+          ]
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[^\u0000]*$"
+        },
+        "elf": {
+          "type": "object",
+          "properties": {
+            "class": {
+              "enum": [
+                "32",
+                "64"
+              ]
+            },
+            "endian": {
+              "enum": [
+                "little",
+                "big"
+              ]
+            },
+            "machine": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "soname": {
+              "type": "string",
+              "pattern": "^[^\u0000]*$"
+            },
+            "needed": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[^\u0000]*$"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "class",
+            "endian",
+            "machine",
+            "soname",
+            "needed"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "path",
+        "kind",
+        "mode",
+        "category"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "file"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "size",
+              "sha256"
+            ],
+            "not": {
+              "required": [
+                "target"
+              ]
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "size"
+                  ]
+                },
+                {
+                  "required": [
+                    "sha256"
+                  ]
+                },
+                {
+                  "required": [
+                    "elf"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "symlink"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "target"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "size",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

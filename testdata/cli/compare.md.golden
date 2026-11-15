@@ -1,0 +1,24 @@
+# FirmwareDelta report
+
+Schema version: 1
+
+Baseline inventory digest: ac0798aa829f99abaa5f8352b7d5b1231ee253032106734bdb45225c53bb2b98
+
+Candidate inventory digest: 98e072da177b0800bc8083a385e86a3a347cab752cb2cd648a8605e82b6b51a7
+
+Verdict: unexpected&#95;changes
+
+Changes: total=2; expected=1; unexpected=1
+
+## Changes
+
+| Path | Category | Field | Before | After | Expected | Rationale |
+| --- | --- | --- | --- | --- | --- | --- |
+| etc/service&#46;conf | config | content | &#123;&#34;size&#34;&#58;19,&#34;sha256&#34;&#58;&#34;bef363b7afe1e9b6354f22deafe9c72d5b4a41edb3879211faecb0fe0f507725&#34;&#125; | &#123;&#34;size&#34;&#58;21,&#34;sha256&#34;&#58;&#34;ec551b0c6d398dfbaa1b3567ae0a43863ea4b7a8789b3a80d931731a624dd1da&#34;&#125; | false |  |
+| usr/bin/tool | executable | content | &#123;&#34;size&#34;&#58;22,&#34;sha256&#34;&#58;&#34;d9f14949821d393cb9ec82d7982c1a3a09c588da28a4a3cd7152e85a6e2744c6&#34;&#125; | &#123;&#34;size&#34;&#58;22,&#34;sha256&#34;&#58;&#34;cce5db67a76ed40e29df90c7c7d13a79e708d41caee6db18a862aa679ba5040d&#34;&#125; | true | Approved maintenance rebuild |
+
+## Policy warnings
+
+| Path | Code |
+| --- | --- |
+| usr/bin/unused | unused&#95;rule |

@@ -1,0 +1,595 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "baseline_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "candidate_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/path"
+          },
+          "category": {
+            "enum": [
+              "config",
+              "library",
+              "executable",
+              "other"
+            ]
+          },
+          "field": {
+            "enum": [
+              "presence",
+              "kind",
+              "content",
+              "mode",
+              "target",
+              "elf.class",
+              "elf.endian",
+              "elf.machine",
+              "elf.soname",
+              "elf.needed"
+            ]
+          },
+          "before": {},
+          "after": {},
+          "expected": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "allOf": [
+              {
+                "pattern": "^[^\u0000]*$"
+              },
+              {
+                "pattern": "[^\t-\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]"
+              }
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "category",
+          "field",
+          "before",
+          "after",
+          "expected"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "oneOf": [
+              {
+                "properties": {
+                  "field": {
+                    "const": "presence"
+                  }
+                },
+                "oneOf": [
+                  {
+                    "properties": {
+                      "before": {
+                        "type": "null"
+                      },
+                      "after": {
+                        "$ref": "#/$defs/entry"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "before": {
+                        "$ref": "#/$defs/entry"
+                      },
+                      "after": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "kind"
+                  },
+                  "before": {
+                    "$ref": "#/$defs/entry"
+                  },
+                  "after": {
+                    "$ref": "#/$defs/entry"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "content"
+                  },
+                  "before": {
+                    "$ref": "#/$defs/content"
+                  },
+                  "after": {
+                    "$ref": "#/$defs/content"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "mode"
+                  },
+                  "before": {
+                    "type": "string",
+                    "pattern": "^[0-7]{4}$"
+                  },
+                  "after": {
+                    "type": "string",
+                    "pattern": "^[0-7]{4}$"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "target"
+                  },
+                  "before": {
+                    "type": "string",
+                    "pattern": "^[^\u0000]*$"
+                  },
+                  "after": {
+                    "type": "string",
+                    "pattern": "^[^\u0000]*$"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "elf.class"
+                  },
+                  "before": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "32",
+                          "64"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "after": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "32",
+                          "64"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "elf.endian"
+                  },
+                  "before": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "little",
+                          "big"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "after": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "little",
+                          "big"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "elf.machine"
+                  },
+                  "before": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 65535
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "after": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 65535
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "elf.soname"
+                  },
+                  "before": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[^\u0000]*$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "after": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[^\u0000]*$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "field": {
+                    "const": "elf.needed"
+                  },
+                  "before": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[^\u0000]*$"
+                        },
+                        "uniqueItems": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "after": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[^\u0000]*$"
+                        },
+                        "uniqueItems": true
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "properties": {
+                "expected": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "reason"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "reason"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "policy_warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/path"
+          },
+          "code": {
+            "const": "unused_rule"
+          }
+        },
+        "required": [
+          "path",
+          "code"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unexpected": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "total",
+        "expected",
+        "unexpected"
+      ],
+      "additionalProperties": false
+    },
+    "verdict": {
+      "enum": [
+        "unchanged",
+        "expected_changes",
+        "unexpected_changes"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "baseline_digest",
+    "candidate_digest",
+    "changes",
+    "policy_warnings",
+    "counts",
+    "verdict"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firmwaredelta.invalid/schemas/report-v1.json",
+  "$defs": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^/\u0000]+(/[^/\u0000]+)*$",
+      "not": {
+        "pattern": "(^|/)\\.\\.?(/|$)"
+      }
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "directory",
+            "symlink",
+            "block_device",
+            "char_device",
+            "fifo",
+            "socket"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^[0-7]{4}$"
+        },
+        "category": {
+          "enum": [
+            "config",
+            "library",
+            "executable",
+            "other"
+          ]
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[^\u0000]*$"
+        },
+        "elf": {
+          "type": "object",
+          "properties": {
+            "class": {
+              "enum": [
+                "32",
+                "64"
+              ]
+            },
+            "endian": {
+              "enum": [
+                "little",
+                "big"
+              ]
+            },
+            "machine": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "soname": {
+              "type": "string",
+              "pattern": "^[^\u0000]*$"
+            },
+            "needed": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[^\u0000]*$"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "class",
+            "endian",
+            "machine",
+            "soname",
+            "needed"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "path",
+        "kind",
+        "mode",
+        "category"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "file"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "size",
+              "sha256"
+            ],
+            "not": {
+              "required": [
+                "target"
+              ]
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "size"
+                  ]
+                },
+                {
+                  "required": [
+                    "sha256"
+                  ]
+                },
+                {
+                  "required": [
+                    "elf"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "symlink"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "target"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "size",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

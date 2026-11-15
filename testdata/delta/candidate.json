@@ -1,0 +1,1 @@
+{"schema_version":1,"entries":[{"path":"etc/tool.conf","kind":"file","mode":"0644","category":"config","size":11,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},{"path":"usr/bin/tool","kind":"file","mode":"0755","category":"executable","size":101,"sha256":"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}]}

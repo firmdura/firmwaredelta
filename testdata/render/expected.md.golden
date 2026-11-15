@@ -1,0 +1,21 @@
+# FirmwareDelta report
+
+Schema version: 1
+
+Baseline inventory digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Candidate inventory digest: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+Verdict: expected&#95;changes
+
+Changes: total=1; expected=1; unexpected=0
+
+## Changes
+
+| Path | Category | Field | Before | After | Expected | Rationale |
+| --- | --- | --- | --- | --- | --- | --- |
+| usr/bin/tool | executable | mode | &#34;0755&#34; | &#34;4755&#34; | true | Approved maintenance mode change |
+
+## Policy warnings
+
+No policy warnings.

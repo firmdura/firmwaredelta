@@ -1,0 +1,34 @@
+# FirmwareDelta report
+
+Schema version: 1
+
+Baseline inventory digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Candidate inventory digest: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+Verdict: unexpected&#95;changes
+
+Changes: total=11; expected=2; unexpected=9
+
+## Changes
+
+| Path | Category | Field | Before | After | Expected | Rationale |
+| --- | --- | --- | --- | --- | --- | --- |
+| etc/service&#46;conf | config | content | &#123;&#34;size&#34;&#58;5,&#34;sha256&#34;&#58;&#34;dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd&#34;&#125; | &#123;&#34;size&#34;&#58;6,&#34;sha256&#34;&#58;&#34;eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&#34;&#125; | true | Approved configuration maintenance |
+| link | other | target | &#34;&#46;&#46;/old&#34; | &#34;/literal/new&#34; | false |  |
+| removed&#45;dir | other | presence | &#123;&#34;path&#34;&#58;&#34;removed&#45;dir&#34;,&#34;kind&#34;&#58;&#34;directory&#34;,&#34;mode&#34;&#58;&#34;0755&#34;,&#34;category&#34;&#58;&#34;other&#34;&#125; | null | false |  |
+| replacement | other | kind | &#123;&#34;path&#34;&#58;&#34;replacement&#34;,&#34;kind&#34;&#58;&#34;symlink&#34;,&#34;mode&#34;&#58;&#34;0777&#34;,&#34;category&#34;&#58;&#34;other&#34;,&#34;target&#34;&#58;&#34;&#46;&#46;/original&#34;&#125; | &#123;&#34;path&#34;&#58;&#34;replacement&#34;,&#34;kind&#34;&#58;&#34;fifo&#34;,&#34;mode&#34;&#58;&#34;0600&#34;,&#34;category&#34;&#58;&#34;other&#34;&#125; | false |  |
+| usr/bin/tool | executable | elf&#46;class | null | &#34;64&#34; | false |  |
+| usr/bin/tool | executable | elf&#46;endian | &#34;little&#34; | &#34;big&#34; | false |  |
+| usr/bin/tool | executable | elf&#46;machine | 62 | 40 | false |  |
+| usr/bin/tool | executable | elf&#46;needed | &#91;&#34;libc&#46;so&#46;6&#34;,&#34;libz&#46;so&#46;1&#34;&#93; | &#91;&#93; | false |  |
+| usr/bin/tool | executable | elf&#46;soname | &#34;libold&#46;so&#46;1&#34; | &#34;&#34; | false |  |
+| usr/bin/tool | executable | mode | &#34;0755&#34; | &#34;4755&#34; | false |  |
+| usr/lib/new&#46;so | library | presence | null | &#123;&#34;path&#34;&#58;&#34;usr/lib/new&#46;so&#34;,&#34;kind&#34;&#58;&#34;file&#34;,&#34;mode&#34;&#58;&#34;0644&#34;,&#34;category&#34;&#58;&#34;library&#34;,&#34;size&#34;&#58;20,&#34;sha256&#34;&#58;&#34;cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc&#34;,&#34;elf&#34;&#58;&#123;&#34;class&#34;&#58;&#34;64&#34;,&#34;endian&#34;&#58;&#34;little&#34;,&#34;machine&#34;&#58;62,&#34;soname&#34;&#58;&#34;libnew&#46;so&#46;1&#34;,&#34;needed&#34;&#58;&#91;&#34;libc&#46;so&#46;6&#34;,&#34;libz&#46;so&#46;1&#34;&#93;&#125;&#125; | true | Approved new library |
+
+## Policy warnings
+
+| Path | Code |
+| --- | --- |
+| a/unused | unused&#95;rule |
+| z/unused | unused&#95;rule |

@@ -1,0 +1,19 @@
+# FirmwareDelta report
+
+Schema version: 1
+
+Baseline inventory digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Candidate inventory digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Verdict: unchanged
+
+Changes: total=0; expected=0; unexpected=0
+
+## Changes
+
+No changes.
+
+## Policy warnings
+
+No policy warnings.

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "baseline_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "candidate_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "changes": [
+    {"path":"usr/lib/new.so","category":"library","field":"presence","before":null,"after":{"path":"usr/lib/new.so","kind":"file","mode":"0644","category":"library","size":20,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","elf":{"class":"64","endian":"little","machine":62,"soname":"libnew.so.1","needed":["libz.so.1","libc.so.6","libz.so.1"]}},"expected":true,"reason":"Approved new library"},
+    {"path":"removed-dir","category":"other","field":"presence","before":{"path":"removed-dir","kind":"directory","mode":"0755","category":"other"},"after":null,"expected":false},
+    {"path":"replacement","category":"other","field":"kind","before":{"path":"replacement","kind":"symlink","mode":"0777","category":"other","target":"../original"},"after":{"path":"replacement","kind":"fifo","mode":"0600","category":"other"},"expected":false},
+    {"path":"link","category":"other","field":"target","before":"../old","after":"/literal/new","expected":false},
+    {"path":"etc/service.conf","category":"config","field":"content","before":{"size":5,"sha256":"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"},"after":{"size":6,"sha256":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"},"expected":true,"reason":"Approved configuration maintenance"},
+    {"path":"usr/bin/tool","category":"executable","field":"mode","before":"0755","after":"4755","expected":false},
+    {"path":"usr/bin/tool","category":"executable","field":"elf.soname","before":"libold.so.1","after":"","expected":false},
+    {"path":"usr/bin/tool","category":"executable","field":"elf.needed","before":["libz.so.1","libc.so.6","libz.so.1"],"after":[],"expected":false},
+    {"path":"usr/bin/tool","category":"executable","field":"elf.machine","before":62,"after":40,"expected":false},
+    {"path":"usr/bin/tool","category":"executable","field":"elf.endian","before":"little","after":"big","expected":false},
+    {"path":"usr/bin/tool","category":"executable","field":"elf.class","before":null,"after":"64","expected":false}
+  ],
+  "policy_warnings": [{"path":"z/unused","code":"unused_rule"},{"path":"a/unused","code":"unused_rule"}],
+  "counts": {"total":11,"expected":2,"unexpected":9},
+  "verdict":"unexpected_changes"
+}
