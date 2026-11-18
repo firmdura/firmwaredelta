@@ -123,5 +123,14 @@ Static library names and dependencies cannot establish those properties.
 The [limits guide](docs/limits.md) explains what the report can and cannot tell
 you.
 
+## About Firmdura
+
+This repository contains a standalone verification utility from
+[Firmdura](https://firmdura.com). Firmdura's commercial offer is shared embedded
+Linux security maintenance through versioned security layers or patch overlays
+for agreed user-space components.
+
+## License
+
 Original code and synthetic test inputs are [Apache-2.0 licensed](LICENSE).
 Binary bundles also include the Go runtime license.
