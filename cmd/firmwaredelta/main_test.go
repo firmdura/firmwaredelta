@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"testing"
@@ -78,5 +79,12 @@ func TestRealCommandArgumentFailures(t *testing.T) {
 	code, stdout, stderr := process(t, "--help")
 	if code != 0 || len(stdout) != 0 || !strings.HasPrefix(stderr, "Usage:") {
 		t.Fatalf("help code=%d stdout=%q stderr=%q", code, stdout, stderr)
+	}
+}
+
+func TestRealCommandVersion(t *testing.T) {
+	code, stdout, stderr := process(t, "--version")
+	if code != 0 || stderr != "" || !regexp.MustCompile(`^firmwaredelta v[0-9]+\.[0-9]+\.[0-9]+\n$`).Match(stdout) {
+		t.Fatalf("version code=%d stdout=%q stderr=%q", code, stdout, stderr)
 	}
 }

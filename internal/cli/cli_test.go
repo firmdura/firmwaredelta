@@ -17,6 +17,7 @@ import (
 func TestInvalidArgumentsNeverProduceReport(t *testing.T) {
 	for _, args := range [][]string{
 		nil, {"other"}, {"compare"}, {"compare", "--baseline", "a"},
+		{"--version", "extra"}, {"--version=other"}, {"compare", "--version"},
 		{"compare", "--baseline", "a", "--candidate"},
 		{"compare", "--baseline", "--candidate", "b"},
 		{"compare", "--baseline=", "--candidate=b"},
@@ -43,7 +44,7 @@ func TestInvalidArgumentsNeverProduceReport(t *testing.T) {
 func TestHelpAndDiagnosticStreams(t *testing.T) {
 	for _, args := range [][]string{{"--help"}, {"-h"}, {"compare", "--help"}, {"compare", "-h"}} {
 		var stdout, stderr bytes.Buffer
-		if code := cli.Run(context.Background(), args, &stdout, &stderr); code != 0 || stdout.Len() != 0 || !strings.HasPrefix(stderr.String(), "Usage:") {
+		if code := cli.Run(context.Background(), args, &stdout, &stderr); code != 0 || stdout.Len() != 0 || !strings.HasPrefix(stderr.String(), "Usage:") || !strings.Contains(stderr.String(), "firmwaredelta --version") {
 			t.Fatalf("help: code=%d stdout=%q stderr=%q", code, stdout.String(), stderr.String())
 		}
 	}

@@ -16,7 +16,13 @@ make build demo
 source build/toolchain.env
 go_root=$(bash build/go.sh env GOROOT)
 test -f "$go_root/LICENSE" && test ! -L "$go_root/LICENSE"
-name=firmwaredelta-v1.0.0-linux-amd64
+version=$(dist/firmwaredelta --version)
+version=${version#firmwaredelta }
+[[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+  printf 'Invalid CLI release version: %s\n' "$version" >&2
+  exit 1
+}
+name=firmwaredelta-$version-linux-amd64
 work=$(mktemp -d "$repo_dir/dist/.package.XXXXXX")
 trap 'rm -rf -- "$work"' EXIT
 stage="$work/$name"
@@ -41,8 +47,8 @@ for input in "${inputs[@]}"; do
   mkdir -p "$stage/$(dirname "$input")"
   cp -- "$input" "$stage/$input"
 done
-cat > "$stage/README.md" <<'README'
-# FirmwareDelta v1.0.0 Linux amd64 binary bundle
+printf '# FirmwareDelta %s Linux amd64 binary bundle\n' "$version" > "$stage/README.md"
+cat >> "$stage/README.md" <<'README'
 
 This bundle provides a ready-to-run CLI, reference documentation and schemas.
 Run the CLI on Linux amd64; no Go installation, compiler, Docker or network
@@ -52,6 +58,10 @@ After extraction, open a terminal in this directory and verify every bundled
 file:
 
     sha256sum -c SHA256SUMS
+
+Identify the installed release without opening any firmware files:
+
+    ./firmwaredelta --version
 
 Supply two extracted firmware root directories that remain unchanged throughout
 the comparison:
@@ -179,6 +189,9 @@ header = binary.read_bytes()[:20]
 assert header[:4] == b"\x7fELF" and header[4:6] == b"\x02\x01" and struct.unpack_from("<H",header,18)[0] == 62, "binary is not Linux amd64 ELF"
 inspected = subprocess.run(["readelf","-h",str(binary)], capture_output=True)
 assert inspected.returncode == 0, "packaged ELF header cannot be inspected"
+version = subprocess.run([str(binary),"--version"], capture_output=True, timeout=30)
+expected_version = "firmwaredelta " + name.removeprefix("firmwaredelta-").removesuffix("-linux-amd64") + "\n"
+assert version.returncode == 0 and not version.stderr and version.stdout.decode() == expected_version, "packaged CLI version differs from archive name"
 args = [str(binary),"compare","--baseline",str(repo/"dist/demo/baseline"),"--candidate",str(repo/"dist/demo/candidate"),"--policy",str(repo/"dist/demo/policy.json"),"--format","json"]
 run = subprocess.run(args, capture_output=True, timeout=30)
 assert run.returncode == 1 and not run.stderr, "packaged binary demo failed"
@@ -188,7 +201,7 @@ assert facts[("usr/bin/maintenance","content")]["expected"] is True
 assert facts[("usr/bin/maintenance","elf.needed")]["expected"] is False
 assert facts[("etc/maintenance.conf","content")]["expected"] is False
 assert report["verdict"] == "unexpected_changes"
-print("Package verified: exact archive allowlist, checksums, Apache/Go notices, Linux amd64 ELF and extracted-binary demo.")
+print("Package verified: exact archive allowlist, checksums, Apache/Go notices, Linux amd64 ELF, release version and extracted-binary demo.")
 PY
 for output in "dist/$name.tar.gz" dist/SHA256SUMS; do
   test ! -L "$output" && { test ! -e "$output" || test -f "$output"; } || {

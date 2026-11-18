@@ -16,7 +16,10 @@ import (
 	"github.com/firmdura/firmwaredelta/pkg/firmwaredelta"
 )
 
-const usage = "Usage: firmwaredelta compare --baseline OLD_ROOT --candidate NEW_ROOT [--policy policy.json] [--format json|markdown]\n"
+const version = "v1.0.1"
+
+const usage = "Usage: firmwaredelta compare --baseline OLD_ROOT --candidate NEW_ROOT [--policy policy.json] [--format json|markdown]\n" +
+	"       firmwaredelta --version\n"
 
 type arguments struct {
 	baseline, candidate, policy, format string
@@ -25,8 +28,14 @@ type arguments struct {
 // Run returns 0 for unchanged/expected-only results, 1 for unexpected changes,
 // and 2 for invalid arguments, missing evidence, cancellation or output failure.
 // Reports reach stdout only after complete comparison and rendering. Diagnostics
-// and help go to stderr; Run never exits the process.
+// and help go to stderr; --version writes to stdout. Run never exits the process.
 func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
+	if len(args) == 1 && args[0] == "--version" {
+		if err := write(stdout, []byte("firmwaredelta "+version+"\n")); err != nil {
+			return fail(stderr, fmt.Errorf("write version: %w", err))
+		}
+		return 0
+	}
 	if len(args) == 1 && (args[0] == "--help" || args[0] == "-h") || len(args) == 2 && args[0] == "compare" && (args[1] == "--help" || args[1] == "-h") {
 		if err := write(stderr, []byte(usage)); err != nil {
 			return 2

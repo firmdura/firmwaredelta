@@ -133,7 +133,7 @@ the owned `dist/demo/` directory, removing reports saved there. Keep reports
 outside that directory before packaging. The outputs are:
 
 - `dist/firmwaredelta`, the raw Linux amd64 CLI;
-- `dist/firmwaredelta-v1.0.0-linux-amd64.tar.gz`, the binary bundle;
+- `dist/firmwaredelta-v1.0.1-linux-amd64.tar.gz`, the binary bundle;
 - `dist/SHA256SUMS`, covering the raw CLI and archive.
 
 The bundle contains the CLI, documentation, schemas, a Go example source file,
@@ -142,15 +142,17 @@ explicitly listed in `scripts/package.sh`, never the whole `dist/` directory.
 Demo generation and development commands require a source checkout; the bundle
 includes their documentation as reference material.
 
-Packaging checks the archive's actual members, modes, checksums and notices,
-then runs the extracted CLI against the demo. To inspect the result yourself
-on Linux amd64:
+Packaging derives the archive name and bundle version from the CLI's
+`--version` output. It checks the archive's actual members, modes, checksums
+and notices, then verifies the extracted CLI's version and runs it against the
+demo. To inspect the result yourself on Linux amd64:
 
 ```sh
 (cd dist && sha256sum -c SHA256SUMS)
 mkdir -p dist/package-preview
-tar -xzf dist/firmwaredelta-v1.0.0-linux-amd64.tar.gz -C dist/package-preview
-if dist/package-preview/firmwaredelta-v1.0.0-linux-amd64/firmwaredelta compare \
+tar -xzf dist/firmwaredelta-v1.0.1-linux-amd64.tar.gz -C dist/package-preview
+dist/package-preview/firmwaredelta-v1.0.1-linux-amd64/firmwaredelta --version
+if dist/package-preview/firmwaredelta-v1.0.1-linux-amd64/firmwaredelta compare \
   --baseline dist/demo/baseline --candidate dist/demo/candidate \
   --policy dist/demo/policy.json --format json > dist/package-preview/demo.json; then
   status=0

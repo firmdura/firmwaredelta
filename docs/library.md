@@ -3,7 +3,7 @@
 Add the released module to your Go project:
 
 ```sh
-go get github.com/firmdura/firmwaredelta@v1.0.0
+go get github.com/firmdura/firmwaredelta@v1.0.1
 ```
 
 The module requires Go 1.27.0 or later. Import its public package as follows:
@@ -15,7 +15,7 @@ import fd "github.com/firmdura/firmwaredelta/pkg/firmwaredelta"
 Comparing directories requires Linux amd64. Policy parsing and JSON or Markdown
 rendering also work on other hosts. The library uses the Go standard library at
 runtime; the repository's JSON Schema validator is only a test dependency.
-The [API reference](https://pkg.go.dev/github.com/firmdura/firmwaredelta@v1.0.0/pkg/firmwaredelta)
+The [API reference](https://pkg.go.dev/github.com/firmdura/firmwaredelta@v1.0.1/pkg/firmwaredelta)
 lists every exported type and constant.
 
 ## Compare directories and write a report

@@ -40,6 +40,16 @@ func TestReportWriterFailuresAreExitTwo(t *testing.T) {
 	}
 }
 
+func TestVersionWriterFailuresAreExitTwo(t *testing.T) {
+	for _, sink := range []io.Writer{nil, badWriter{}, badWriter{partial: true}} {
+		var stderr bytes.Buffer
+		code := cli.Run(context.Background(), []string{"--version"}, sink, &stderr)
+		if code != 2 || !strings.Contains(stderr.String(), "write version") {
+			t.Fatalf("version writer failure code=%d stderr=%q", code, stderr.String())
+		}
+	}
+}
+
 func TestPolicySpecialFilesDoNotBlock(t *testing.T) {
 	root := t.TempDir()
 	fifo := filepath.Join(root, "fifo")

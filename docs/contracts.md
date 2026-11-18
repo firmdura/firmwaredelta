@@ -199,6 +199,9 @@ changes; exit 2 means invalid input, execution or writer failure. Missing eviden
 must never become a clean report. Build/setup networking is separate from
 comparison and offline verification.
 
+The standalone `--version` flag writes the release identifier to stdout without
+opening inputs and exits 0, or 2 if output delivery fails. Help stays on stderr.
+
 ## Schemas and executable checks
 
 [`schemas/`](../schemas/) contains standalone JSON Schema 2020-12 definitions for

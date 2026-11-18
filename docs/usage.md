@@ -31,6 +31,10 @@ flags, extra positional arguments, empty or missing values, unknown flags, and
 unsupported formats are errors. Run `./firmwaredelta --help` for a reminder of
 the syntax; help is written to stderr and exits 0.
 
+Run `./firmwaredelta --version` on its own to identify the installed release.
+It prints `firmwaredelta v1.0.1` to stdout and exits 0 without requiring firmware
+roots or opening any inputs. A version-output failure exits 2.
+
 A completed comparison writes its report to stdout. Diagnostics go to stderr.
 Use the exit status as follows:
 
