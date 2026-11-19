@@ -133,7 +133,7 @@ the owned `dist/demo/` directory, removing reports saved there. Keep reports
 outside that directory before packaging. The outputs are:
 
 - `dist/firmwaredelta`, the raw Linux amd64 CLI;
-- `dist/firmwaredelta-v1.0.1-linux-amd64.tar.gz`, the binary bundle;
+- `dist/firmwaredelta-v1.0.2-linux-amd64.tar.gz`, the binary bundle;
 - `dist/SHA256SUMS`, covering the raw CLI and archive.
 
 The bundle contains the CLI, documentation, schemas, a Go example source file,
@@ -150,9 +150,9 @@ demo. To inspect the result yourself on Linux amd64:
 ```sh
 (cd dist && sha256sum -c SHA256SUMS)
 mkdir -p dist/package-preview
-tar -xzf dist/firmwaredelta-v1.0.1-linux-amd64.tar.gz -C dist/package-preview
-dist/package-preview/firmwaredelta-v1.0.1-linux-amd64/firmwaredelta --version
-if dist/package-preview/firmwaredelta-v1.0.1-linux-amd64/firmwaredelta compare \
+tar -xzf dist/firmwaredelta-v1.0.2-linux-amd64.tar.gz -C dist/package-preview
+dist/package-preview/firmwaredelta-v1.0.2-linux-amd64/firmwaredelta --version
+if dist/package-preview/firmwaredelta-v1.0.2-linux-amd64/firmwaredelta compare \
   --baseline dist/demo/baseline --candidate dist/demo/candidate \
   --policy dist/demo/policy.json --format json > dist/package-preview/demo.json; then
   status=0

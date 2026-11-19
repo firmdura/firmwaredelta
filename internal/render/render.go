@@ -42,9 +42,11 @@ func WriteMarkdown(w io.Writer, report model.Report) error {
 		return err
 	}
 	var out bytes.Buffer
-	fmt.Fprintf(&out, "# FirmwareDelta report\n\nSchema version: %d\n\nBaseline inventory digest: %s\n\nCandidate inventory digest: %s\n\nVerdict: %s\n\nChanges: total=%d; expected=%d; unexpected=%d\n\n## Changes\n\n",
+	fmt.Fprintf(&out, "# FirmwareDelta report\n\nSchema version: %d\n\nBaseline inventory digest: %s\n\nCandidate inventory digest: %s\n\nVerdict: %s\n\nChanges: total=%d; expected=%d; unexpected=%d\n\n",
 		normal.SchemaVersion, escapeMarkdown(normal.BaselineDigest), escapeMarkdown(normal.CandidateDigest),
 		escapeMarkdown(string(normal.Verdict)), normal.Counts.Total, normal.Counts.Expected, normal.Counts.Unexpected)
+	paths, unexpectedPaths := changedPathCounts(normal.Changes)
+	fmt.Fprintf(&out, "Changed paths: %d (%d with unexpected changes)\n\n## Changes\n\n", paths, unexpectedPaths)
 	if len(normal.Changes) == 0 {
 		out.WriteString("No changes.\n")
 	} else {
@@ -73,6 +75,22 @@ func WriteMarkdown(w io.Writer, report model.Report) error {
 		}
 	}
 	return write(w, out.Bytes())
+}
+
+// In a normalized report, all fields for one path are adjacent.
+func changedPathCounts(changes []model.Change) (total, unexpected int) {
+	var countedUnexpected bool
+	for i, c := range changes {
+		if i == 0 || c.Path != changes[i-1].Path {
+			total++
+			countedUnexpected = false
+		}
+		if !c.Expected && !countedUnexpected {
+			unexpected++
+			countedUnexpected = true
+		}
+	}
+	return total, unexpected
 }
 
 // Entities are parsed as text by Markdown, rather than reinterpreted as syntax.

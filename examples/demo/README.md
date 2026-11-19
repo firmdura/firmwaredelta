@@ -95,6 +95,8 @@ The path and field must both match. The resulting report keeps all five records:
 The counts are `total: 5`, `expected: 1`, and `unexpected: 4`. The verdict is
 `unexpected_changes`, with no unused-rule warnings. Counts refer to individual
 changes, so the program's content and dependency changes count separately.
+Markdown also shows `Changed paths: 4 (4 with unexpected changes)`: the
+program counts as one path, and its dependency change is still unexpected.
 
 ELF is the format used by these sample Linux programs and shared libraries.
 The program still records dependencies on `libmaintenance.so.1` and `libc.so.6`;

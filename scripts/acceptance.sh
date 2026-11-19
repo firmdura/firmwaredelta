@@ -119,6 +119,7 @@ assert (library["class"],library["endian"],library["machine"],library["soname"])
 assert changes[("usr/lib/libmaintenance.so.1","content")]["expected"] is False
 markdown = invoke(policy_path=policy, fmt="markdown")
 assert markdown == invoke(policy_path=policy, fmt="markdown") == invoke(policy_path=policy, fmt=None)
+assert b"\nChanged paths: 4 (4 with unexpected changes)\n" in markdown, "mixed-policy path not counted once"
 assert b"maintenance&#46;conf" in markdown and b"elf&#46;needed" in markdown
 assert b"Approved maintenance executable rebuild" in markdown
 
