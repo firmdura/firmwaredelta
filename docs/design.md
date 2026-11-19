@@ -126,15 +126,13 @@ See the [build guide](../build/README.md) for complete prerequisites and command
 The tests compile small original C fixtures with the fixed compiler version
 and inspect them without executing them. Fixtures include malformed ELF and
 a dynamically linked executable pair with different `DT_NEEDED` entries.
-The final clean-checkout Linux review checked that the CLI and library agree,
-unexpected facts reach the report and exit status, allowances do not hide
-unrelated fields, invalid or unreadable evidence fails, contents stay private,
-inputs remain unchanged and repeated reports match byte for byte.
+On Linux, the acceptance checks compare CLI and library results, check that
+unexpected changes affect the exit status and that an allowance covers only
+its listed fields. They also exercise invalid and unreadable inputs, check for
+file-content disclosure, and compare input bytes and repeat reports.
 
-The release includes a Linux amd64 binary bundle and checksums, a runnable
-maintenance demo, a public-library example, schemas and documentation. The
-guides cover immutable extracted roots, compared and omitted attributes,
-policy/report formats, errors, cancellation, limits and interpretation. The
-README also explains how this focused review complements diffoscope and Yocto
-buildhistory. Original code and synthetic fixtures use Apache-2.0; binary
-bundles preserve the applicable Go runtime notice.
+The Linux amd64 release includes a binary bundle and checksums.
+The [demo](../examples/demo) includes extracted roots and a policy.
+The [library example](../examples/library) shows how to embed the comparison.
+Original code and synthetic fixtures use Apache-2.0. Binary bundles include the
+Go runtime notice.
