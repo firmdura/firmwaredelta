@@ -32,7 +32,7 @@ unsupported formats are errors. Run `./firmwaredelta --help` for a reminder of
 the syntax; help is written to stderr and exits 0.
 
 Run `./firmwaredelta --version` on its own to identify the installed release.
-It prints `firmwaredelta v1.0.1` to stdout and exits 0 without requiring firmware
+It prints `firmwaredelta v1.0.2` to stdout and exits 0 without requiring firmware
 roots or opening any inputs. A version-output failure exits 2.
 
 A completed comparison writes its report to stdout. Diagnostics go to stderr.
@@ -145,8 +145,13 @@ The [version 1 contracts](contracts.md) describe the canonical encoding in detai
 the [inventory](../schemas/inventory-v1.json) and
 [report](../schemas/report-v1.json) schemas describe the JSON structure.
 
-Markdown presents the same changes, counts, digests, reasons, and warnings. It
-escapes caller-supplied text to prevent Markdown, HTML, links, or terminal
+Markdown presents the same changes, counts, digests, reasons, and warnings.
+Its **Changed paths** line counts distinct paths in the change records and shows
+how many have at least one unexpected change. A path with both expected and
+unexpected changes counts once in each number. Paths mentioned only in policy
+warnings do not count.
+
+Markdown escapes caller-supplied text to prevent Markdown, HTML, links, or terminal
 controls from being interpreted. JSON represents that text as JSON strings.
 Reports exclude regular-file contents, but include names, literal symlink
 targets, library names, and policy text. See [limits and privacy](limits.md)

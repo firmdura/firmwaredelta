@@ -16,7 +16,7 @@ import (
 	"github.com/firmdura/firmwaredelta/pkg/firmwaredelta"
 )
 
-const version = "v1.0.1"
+const version = "v1.0.2"
 
 const usage = "Usage: firmwaredelta compare --baseline OLD_ROOT --candidate NEW_ROOT [--policy policy.json] [--format json|markdown]\n" +
 	"       firmwaredelta --version\n"

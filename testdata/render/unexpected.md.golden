@@ -10,6 +10,8 @@ Verdict: unexpected&#95;changes
 
 Changes: total=11; expected=2; unexpected=9
 
+Changed paths: 6 (4 with unexpected changes)
+
 ## Changes
 
 | Path | Category | Field | Before | After | Expected | Rationale |

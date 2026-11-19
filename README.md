@@ -19,12 +19,12 @@ it does not establish that the new firmware is safe or compatible.
 ## Use the command-line tool
 
 Download the Linux amd64 archive from the
-[v1.0.1 release](https://github.com/firmdura/firmwaredelta/releases/tag/v1.0.1).
+[v1.0.2 release](https://github.com/firmdura/firmwaredelta/releases/tag/v1.0.2).
 On a 64-bit x86 Linux machine, unpack it and check the included file checksums:
 
 ```sh
-tar -xzf firmwaredelta-v1.0.1-linux-amd64.tar.gz
-cd firmwaredelta-v1.0.1-linux-amd64
+tar -xzf firmwaredelta-v1.0.2-linux-amd64.tar.gz
+cd firmwaredelta-v1.0.2-linux-amd64
 sha256sum -c SHA256SUMS
 ./firmwaredelta --version
 ```
@@ -86,14 +86,14 @@ amd64 toolchain reliably.
 In an existing Go project, add the released module:
 
 ```sh
-go get github.com/firmdura/firmwaredelta@v1.0.1
+go get github.com/firmdura/firmwaredelta@v1.0.2
 ```
 
 Import `github.com/firmdura/firmwaredelta/pkg/firmwaredelta`. The module requires
 Go 1.27.0 or later; the repository's development tools use Go 1.27.4. Comparing
 directories requires Linux amd64, while policy parsing and report rendering also
 work on other hosts. See the [library guide](docs/library.md) and the
-[Go API reference](https://pkg.go.dev/github.com/firmdura/firmwaredelta@v1.0.1/pkg/firmwaredelta)
+[Go API reference](https://pkg.go.dev/github.com/firmdura/firmwaredelta@v1.0.2/pkg/firmwaredelta)
 for comparison, cancellation, and error handling.
 
 ## Build and contribute

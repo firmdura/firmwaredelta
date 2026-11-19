@@ -10,6 +10,8 @@ Verdict: expected&#95;changes
 
 Changes: total=1; expected=1; unexpected=0
 
+Changed paths: 1 (0 with unexpected changes)
+
 ## Changes
 
 | Path | Category | Field | Before | After | Expected | Rationale |
